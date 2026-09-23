@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Chat | Secure Rooms</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Lobby View -->
+    <div id="lobby-view" class="view-container active">
+        <div class="glass-card auth-box">
+            <h1>NEXUS <span class="accent">CHAT</span></h1>
+            <p class="subtitle">Secure Multi-User Conversations</p>
+
+            <div class="input-group">
+                <label for="username">Display Name</label>
+                <input type="text" id="username" placeholder="Enter your display name" autocomplete="off">
+            </div>
+
+            <div class="input-group">
+                <label for="roomcode">Room Access Code</label>
+                <input type="text" id="roomcode" placeholder="e.g. ALPHA-99" autocomplete="off">
+            </div>
+
+            <div class="action-buttons">
+                <button id="join-btn" class="primary-btn">Join Room</button>
+                <button id="create-btn" class="secondary-btn">Create New Room</button>
+            </div>
+            <p id="lobby-error" class="error-msg"></p>
+        </div>
+    </div>
+
+    <!-- Chat View -->
+    <div id="chat-view" class="view-container hidden">
+        <div class="chat-layout glass-card">
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="room-info">
+                    <h2>Room Code</h2>
+                    <div class="code-box">
+                        <span id="display-roomcode" class="code-text">------</span>
+                        <button id="copy-btn" class="icon-btn" title="Copy Room Code">📋</button>
+                    </div>
+                    <p class="hint-text">Share this code with friends to let them join!</p>
+                </div>
+
+                <div class="user-status-wrapper">
+                    <p>Current User</p>
+                    <div class="user-badge" id="display-username">User</div>
+                </div>
+
+                <button id="leave-btn" class="danger-btn">Leave Room</button>
+            </div>
+
+            <!-- Main Chat Area -->
+            <div class="chat-main">
+                <div id="messages-container" class="messages-area">
+                    <div class="sys-message">Welcome! Open this page in another browser tab and enter the same code to
+                        chat!</div>
+                </div>
+
+                <div class="input-area">
+                    <form id="chat-form">
+                        <input type="text" id="message-input" placeholder="Type your message here..."
+                            autocomplete="off">
+                        <button type="submit" id="send-btn" class="send-btn">
+                            <span class="send-icon">➤</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast hidden">Copied to clipboard!</div>
+
+    <!-- WebRTC PeerJS Library -->
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
