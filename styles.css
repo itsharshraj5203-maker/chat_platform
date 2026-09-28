@@ -50,52 +50,57 @@ body::before {
 /* SPACE THEME STARS */
 .stars {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    top: 0; left: 0; width: 100vw; height: 100vh;
     z-index: -3;
-    background-color: #050a12;
-    background-image:
-        radial-gradient(1.5px 1.5px at 10% 20%, #ffffff 100%, transparent),
-        radial-gradient(1px 1px at 30% 80%, #ffffff 100%, transparent),
-        radial-gradient(2px 2px at 40% 10%, #ffffff 100%, transparent),
-        radial-gradient(1.5px 1.5px at 60% 30%, #ffffff 100%, transparent),
-        radial-gradient(1px 1px at 80% 40%, #ffffff 100%, transparent),
-        radial-gradient(2px 2px at 15% 90%, #ffffff 100%, transparent),
-        radial-gradient(1px 1px at 35% 45%, #ffffff 100%, transparent),
-        radial-gradient(1.5px 1.5px at 75% 65%, #ffffff 100%, transparent),
-        radial-gradient(1px 1px at 85% 15%, #ffffff 100%, transparent),
-        radial-gradient(2px 2px at 25% 65%, #ffffff 100%, transparent);
+    background-color: #03060a;
+    background-image: 
+        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.7) 100%, transparent),
+        radial-gradient(1px 1px at 30% 80%, rgba(255,255,255,0.6) 100%, transparent),
+        radial-gradient(1.5px 1.5px at 40% 10%, rgba(255,255,255,0.8) 100%, transparent),
+        radial-gradient(1px 1px at 60% 30%, rgba(255,255,255,0.5) 100%, transparent),
+        radial-gradient(2px 2px at 80% 40%, rgba(255,255,255,0.8) 100%, transparent),
+        radial-gradient(1px 1px at 15% 90%, rgba(255,255,255,0.6) 100%, transparent),
+        radial-gradient(1.5px 1.5px at 35% 45%, rgba(255,255,255,0.7) 100%, transparent),
+        radial-gradient(1px 1px at 75% 65%, rgba(255,255,255,0.8) 100%, transparent),
+        radial-gradient(1px 1px at 85% 15%, rgba(255,255,255,0.5) 100%, transparent),
+        radial-gradient(1px 1px at 25% 65%, rgba(255,255,255,0.9) 100%, transparent);
     background-size: 200px 200px;
+    animation: driftSmall 60s linear infinite;
 }
 
 .twinkling {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    top: 0; left: 0; width: 100vw; height: 100vh;
     z-index: -2;
-    background-image:
+    background-image: 
         radial-gradient(1.5px 1.5px at 15% 25%, rgba(255, 255, 255, 0.9) 100%, transparent),
         radial-gradient(2px 2px at 45% 55%, rgba(255, 255, 255, 0.8) 100%, transparent),
         radial-gradient(1.5px 1.5px at 85% 10%, rgba(255, 255, 255, 0.7) 100%, transparent),
         radial-gradient(2px 2px at 65% 85%, rgba(255, 255, 255, 0.9) 100%, transparent);
-    background-size: 350px 350px;
-    animation: twinkling 3.5s infinite ease-in-out alternate;
+    background-size: 300px 300px;
+    animation: driftMedium 40s linear infinite, twinkling 3s ease-in-out infinite alternate;
 }
 
-@keyframes twinkling {
-    0% {
-        opacity: 0.2;
-        transform: scale(1);
-    }
+.stars-large {
+    position: absolute;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: -1;
+    background-image: 
+        radial-gradient(2.5px 2.5px at 20% 30%, rgba(255, 255, 255, 1) 100%, transparent),
+        radial-gradient(3px 3px at 70% 70%, rgba(255, 255, 255, 0.9) 100%, transparent),
+        radial-gradient(2px 2px at 50% 20%, rgba(255, 255, 255, 1) 100%, transparent);
+    background-size: 400px 400px;
+    animation: driftLarge 25s linear infinite, twinkling 4s ease-in-out infinite alternate;
+    pointer-events: none;
+}
 
-    100% {
-        opacity: 1;
-        transform: scale(1.02);
-    }
+@keyframes driftSmall { from { background-position: 0 0; } to { background-position: 0 400px; } }
+@keyframes driftMedium { from { background-position: 0 0; } to { background-position: 0 600px; } }
+@keyframes driftLarge { from { background-position: 0 0; } to { background-position: 0 800px; } }
+
+@keyframes twinkling {
+    0% { opacity: 0.3; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1.1); box-shadow: 0 0 10px rgba(255,255,255,0.5); }
 }
 
 .view-container {
@@ -127,12 +132,17 @@ body::before {
 
 /* Glassmorphism Containers */
 .glass-card {
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
+    background: rgba(22, 34, 53, 0.55);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 24px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(255, 255, 255, 0.08);
 }
 
 /* LOBBY VIEW */
@@ -141,18 +151,29 @@ body::before {
     width: 100%;
     max-width: 480px;
     text-align: center;
+    animation: floatCard 6s ease-in-out infinite;
+}
+
+@keyframes floatCard {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
 }
 
 .auth-box h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
+    font-size: 2.8rem;
+    font-weight: 800;
     letter-spacing: 2px;
     margin-bottom: 5px;
+    background: linear-gradient(135deg, #ffffff, var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 30px var(--accent-glow);
 }
 
 .auth-box .accent {
     color: var(--accent);
-    text-shadow: 0 0 15px var(--accent-glow);
+    -webkit-text-fill-color: var(--accent);
 }
 
 .subtitle {
@@ -361,18 +382,17 @@ button {
     display: flex;
     flex-direction: column;
     max-width: 75%;
-    animation: slideIn 0.3s ease forwards;
+    animation: slideInPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
-@keyframes slideIn {
+@keyframes slideInPop {
     from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(20px) scale(0.9);
     }
-
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
@@ -432,14 +452,18 @@ button {
     background: transparent !important;
 }
 
-.chat-image,
-.chat-video {
+.chat-image, .chat-video {
     max-width: 100%;
     max-height: 280px;
     border-radius: 14px;
     object-fit: cover;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     display: block;
+    transition: transform 0.3s ease;
+}
+
+.chat-image:hover, .chat-video:hover {
+    transform: scale(1.02);
 }
 
 .input-area {
@@ -464,13 +488,20 @@ button {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: var(--accent);
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1.2rem;
     padding: 0;
+    box-shadow: 0 4px 15px var(--accent-glow);
+    transition: transform 0.3s;
+}
+
+.send-btn:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 6px 20px var(--accent-glow);
 }
 
 .attachment-btn {
