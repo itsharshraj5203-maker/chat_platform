@@ -17,7 +17,8 @@ const leaveBtn = document.getElementById('leave-btn');
 const messagesContainer = document.getElementById('messages-container');
 const chatForm = document.getElementById('chat-form');
 const messageInput = document.getElementById('message-input');
-const toast = document.getElementById('toast');
+const mediaInput = document.getElementById('media-input');
+const birdContainer = document.getElementById('bird-container');
 
 let currentUser = "";
 let currentRoom = "";
@@ -141,6 +142,8 @@ const handleIncomingData = (data, sourceConn) => {
         appendSystemMessage(data.text);
     } else if (data.type === 'typing') {
         showTyping(data.user);
+    } else if (data.type === 'media') {
+        appendMediaMessage(data.user, data.data, data.mime, 'other');
     }
 
     // If I am Host, relay to other clients (Star Topology)
@@ -181,6 +184,37 @@ const appendMessage = (sender, text, type) => {
     scrollToBottom();
 };
 
+const appendMediaMessage = (sender, dataUrl, mimeType, type) => {
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('message-wrapper', type);
+
+    const nameEl = document.createElement('div');
+    nameEl.classList.add('sender-name');
+    nameEl.textContent = sender;
+
+    const bubbleEl = document.createElement('div');
+    bubbleEl.classList.add('message-bubble', 'media-bubble');
+
+    if (mimeType.startsWith('image/')) {
+        const img = document.createElement('img');
+        img.src = dataUrl;
+        img.classList.add('chat-image');
+        bubbleEl.appendChild(img);
+    } else if (mimeType.startsWith('video/')) {
+        const vid = document.createElement('video');
+        vid.src = dataUrl;
+        vid.controls = true;
+        vid.classList.add('chat-video');
+        bubbleEl.appendChild(vid);
+    }
+
+    wrapper.appendChild(nameEl);
+    wrapper.appendChild(bubbleEl);
+
+    messagesContainer.appendChild(wrapper);
+    scrollToBottom();
+};
+
 const appendSystemMessage = (text) => {
     const sysEl = document.createElement('div');
     sysEl.classList.add('sys-message');
@@ -197,12 +231,14 @@ const scrollToBottom = () => {
 let typingTimeout;
 messageInput.addEventListener('input', () => {
     messageInput.classList.add('is-typing');
+    birdContainer.classList.add('fly');
 
     broadcastMessage({ type: 'typing', user: currentUser });
 
     clearTimeout(typingTimeout);
     typingTimeout = setTimeout(() => {
         messageInput.classList.remove('is-typing');
+        birdContainer.classList.remove('fly');
     }, 400);
 });
 
@@ -254,6 +290,27 @@ chatForm.addEventListener('submit', (e) => {
 
     messageInput.value = '';
     messageInput.classList.remove('is-typing');
+    birdContainer.classList.remove('fly');
+});
+
+mediaInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (file.size > 15 * 1024 * 1024) {
+        alert("File too large! Please upload files under 15MB.");
+        mediaInput.value = '';
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+        const dataUrl = ev.target.result;
+        appendMediaMessage(currentUser, dataUrl, file.type, 'mine');
+        broadcastMessage({ type: 'media', mime: file.type, data: dataUrl, user: currentUser });
+    };
+    reader.readAsDataURL(file);
+    mediaInput.value = '';
 });
 
 leaveBtn.addEventListener('click', () => {
@@ -269,8 +326,5 @@ leaveBtn.addEventListener('click', () => {
 });
 
 copyBtn.addEventListener('click', () => {
-    navigator.clipboard.writeText(currentRoom).then(() => {
-        toast.classList.remove('hidden');
-        setTimeout(() => toast.classList.add('hidden'), 2000);
-    });
+    navigator.clipboard.writeText(currentRoom);
 });

@@ -10,6 +10,10 @@
 </head>
 
 <body>
+    <!-- Space Layers -->
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+
     <!-- Lobby View -->
     <div id="lobby-view" class="view-container active">
         <div class="glass-card auth-box">
@@ -65,7 +69,10 @@
                 </div>
 
                 <div class="input-area">
+                    <div id="bird-container">🐦</div>
                     <form id="chat-form">
+                        <label for="media-input" class="icon-btn attachment-btn" title="Upload Media">📎</label>
+                        <input type="file" id="media-input" accept="image/*,video/*" hidden>
                         <input type="text" id="message-input" placeholder="Type your message here..."
                             autocomplete="off">
                         <button type="submit" id="send-btn" class="send-btn">
@@ -77,9 +84,6 @@
 
         </div>
     </div>
-
-    <!-- Notification Toast -->
-    <div id="toast" class="toast hidden">Copied to clipboard!</div>
 
     <!-- WebRTC PeerJS Library -->
     <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>

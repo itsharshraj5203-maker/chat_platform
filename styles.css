@@ -28,6 +28,7 @@ body {
     align-items: center;
     overflow: hidden;
     position: relative;
+    background: transparent;
 }
 
 body::before {
@@ -44,6 +45,57 @@ body::before {
             rgba(94, 106, 210, 0.12),
             transparent 40%);
     transition: background 0.1s;
+}
+
+/* SPACE THEME STARS */
+.stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -3;
+    background-color: #050a12;
+    background-image:
+        radial-gradient(1.5px 1.5px at 10% 20%, #ffffff 100%, transparent),
+        radial-gradient(1px 1px at 30% 80%, #ffffff 100%, transparent),
+        radial-gradient(2px 2px at 40% 10%, #ffffff 100%, transparent),
+        radial-gradient(1.5px 1.5px at 60% 30%, #ffffff 100%, transparent),
+        radial-gradient(1px 1px at 80% 40%, #ffffff 100%, transparent),
+        radial-gradient(2px 2px at 15% 90%, #ffffff 100%, transparent),
+        radial-gradient(1px 1px at 35% 45%, #ffffff 100%, transparent),
+        radial-gradient(1.5px 1.5px at 75% 65%, #ffffff 100%, transparent),
+        radial-gradient(1px 1px at 85% 15%, #ffffff 100%, transparent),
+        radial-gradient(2px 2px at 25% 65%, #ffffff 100%, transparent);
+    background-size: 200px 200px;
+}
+
+.twinkling {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2;
+    background-image:
+        radial-gradient(1.5px 1.5px at 15% 25%, rgba(255, 255, 255, 0.9) 100%, transparent),
+        radial-gradient(2px 2px at 45% 55%, rgba(255, 255, 255, 0.8) 100%, transparent),
+        radial-gradient(1.5px 1.5px at 85% 10%, rgba(255, 255, 255, 0.7) 100%, transparent),
+        radial-gradient(2px 2px at 65% 85%, rgba(255, 255, 255, 0.9) 100%, transparent);
+    background-size: 350px 350px;
+    animation: twinkling 3.5s infinite ease-in-out alternate;
+}
+
+@keyframes twinkling {
+    0% {
+        opacity: 0.2;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1.02);
+    }
 }
 
 .view-container {
@@ -374,7 +426,24 @@ button {
     margin: 10px 0;
 }
 
+/* Media Bubbles */
+.media-bubble {
+    padding: 6px !important;
+    background: transparent !important;
+}
+
+.chat-image,
+.chat-video {
+    max-width: 100%;
+    max-height: 280px;
+    border-radius: 14px;
+    object-fit: cover;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    display: block;
+}
+
 .input-area {
+    position: relative;
     padding: 20px 30px;
     background: rgba(0, 0, 0, 0.3);
     border-top: 1px solid var(--glass-border);
@@ -404,18 +473,51 @@ button {
     padding: 0;
 }
 
-.toast {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--text-primary);
-    color: var(--bg-dark);
-    padding: 10px 20px;
-    border-radius: 30px;
-    font-weight: 600;
-    transition: opacity 0.3s;
-    z-index: 100;
+.attachment-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 15px;
+    font-size: 1.4rem;
+    color: var(--text-secondary);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 25px;
+}
+
+.attachment-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+#bird-container {
+    position: absolute;
+    top: -40px;
+    right: 40px;
+    font-size: 2.5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    z-index: 50;
+    filter: drop-shadow(0 0 10px rgba(94, 106, 210, 0.8));
+}
+
+#bird-container.fly {
+    opacity: 1;
+    transform: translateY(0);
+    animation: flapBird 0.4s infinite alternate ease-in-out;
+}
+
+@keyframes flapBird {
+    0% {
+        transform: translateY(0) rotate(-10deg);
+    }
+
+    100% {
+        transform: translateY(-15px) rotate(10deg);
+    }
 }
 
 /* INTERACTIVE ANIMATIONS ZONE */
